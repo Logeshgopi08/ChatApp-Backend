@@ -17,7 +17,7 @@ const PORT = process.env.PORT || 5000;
 
 app.use("/chatapp",authRouter);
 app.use("/api/messages",messageRouter);
-app.use("")
+app.use("/chatapp",userRouter);
 
 connectDb().then(()=>{
     console.log("Database is Connected");

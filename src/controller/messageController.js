@@ -42,5 +42,26 @@ const SendMessage = async(req,res)=>{
     }
 }
 
+const getMessage = async(req,res)=>{
+    try {
 
-module.exports = {SendMessage}
+        const {id:userchatId} = req.params;
+        const senderId = req.user._id;
+
+        const conversation = await Conversation.findOne({
+            participants:{$all:[senderId,userchatId]}
+        }).populate("messages");
+
+        if(!conversation){
+            return res.status(401).json([]);
+        }
+
+        res.json(conversation.messages);
+        
+    } catch (error) {
+        res.status(401).send(error.message);
+    }
+}
+
+
+module.exports = {SendMessage,getMessage}
